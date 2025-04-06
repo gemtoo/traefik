@@ -1,0 +1,44 @@
+http:
+  routers:
+    example-com:
+      rule: "Host(`example.com`)"
+      service: example-com
+      middlewares:
+        - ip-whitelist
+      priority: 1000
+      entryPoints:
+        - web
+        - websecure
+      tls:
+        certResolver: letsencrypt
+
+    example-com-api:
+       rule: "Host(`example.com`) && PathPrefix(`/api`)"
+       service: example-com-api
+       middlewares:
+        - ip-whitelist
+       priority: 1100 # Higher priority to ensure this router takes precedence for /api request
+       entryPoints:
+         - web
+         - websecure
+       tls:
+         certResolver: letsencrypt
+
+  services:
+    example-com:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.10.38:8888"
+    example-com-api:
+      loadBalancer:
+        servers:
+          - url: "http://10.0.10.38:8000"
+
+  middlewares:
+    ip-whitelist:
+      ipWhiteList:
+        sourceRange:
+          - "10.0.0.0/8"
+          - "172.16.0.0/12"
+          - "192.168.0.0/16"
+          - "1.2.3.4/32"
