@@ -9,6 +9,7 @@ accesslog: {}
 entryPoints:
   web:
     address: :80
+    http3: true
     http:
       redirections:
         entryPoint:
@@ -16,6 +17,7 @@ entryPoints:
           scheme: https
   websecure:
     address: :443
+    http3: true
 
 certificatesResolvers:
   letsencrypt:
