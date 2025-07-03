@@ -15,6 +15,7 @@ services:
       - "traefik.http.routers.example.entrypoints=web"
       - "traefik.http.routers.example.entrypoints=websecure"
       - "traefik.http.routers.example.tls.certResolver=letsencrypt"
+      - "traefik.http.services.example.loadbalancer.server.scheme=http"
       - "traefik.http.services.example.loadbalancer.server.port=80"
 
 networks:
