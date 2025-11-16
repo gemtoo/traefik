@@ -3,6 +3,8 @@ services:
   traefik:
     image: docker.io/library/traefik:3
     container_name: traefik
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - 80:80/tcp
       - 80:80/udp
